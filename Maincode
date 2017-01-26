@@ -1,0 +1,266 @@
+from random import *
+import math
+from tkinter import *
+import tkinter as tk
+from tkinter import messagebox
+
+#-----------------------------------List of 491 Korean verbs ------------------------------------------------------------------------
+
+korean = [u"애쓰다", u"아끼다", u"알다", u"알리다", u"앓다", u"안되다", u"않다", u"안다", u"앉다",
+u"알아보다", u"받아들이다",u"배우다", u"바꾸다", u"바뀌다", u"발견되다", u"발견하다", u"발전하다",
+u"밝히다", u"발표하다", u"발생하다", u"발달하다",u"반대하다", u"방문하다", u"밟다", u"바라보다", u"바라다", u"바르다", u"받다", u"벌다", u"벌리다", u"벌어지다", u"버리다", u"벌이다",
+u"벗어나다", u"벗다", u"비치다", u"비추다", u"비다", u"비교하다", u"빌리다",u"빌려주다" u"빛나다", u"보다", u"뵙다", u"보이다", u"볶다", u"보내다",
+u"붙이다", u"불다", u"부르다", u"부탁하다", u"붓다", u"붙다", u"변하다", u"변화하다", u"차다",u"챙기다",u"채우다", u"찾아보다", u"찾아가다",
+u"찾아오다",u"참석하다",u"참다",u"차리다",u"찾다",u"쳐다보다", u"청소하다", u"치다",u"초대하다",u"추다",u"축하하다",u"출발하다",u"춤추다",u"취하다",
+u"취소하다", u"다치다", u"닫히다",u"대다", u"대답하다",u"대하다",u"다가가다",u"다가오다", u"다하다", u"닦다",u"달다", u"달라지다",u"달리다",
+u"달려가다", u"떠오르다", u"떨어지다",u"뜨다", u"뜻하다", u"뛰다", u"의하다", u"의미하다", u"울다", u"울리다", u"움직이다", u"운동하다",
+u"운전하다", u"웃기다", u"웃다", u"위하다", u"원하다", u"약속하다", u"여행하다", u"열다", u"열리다",u"연구하다", u"연습하다",
+u"요구하다", u"요리하다", u"담기다",u"닮다",u"담다",u"당기다",u"당하다",u"다니다",u"다녀오다",u"달아나다",u"닿다",u"닫다",u"더하다",u"던지다",
+u"덮다",u"데리다",u"데려가다",u"데려오다",u"들다",u"들르다",u"들리다",u"들어가다",u"드러나다",u"드러내다",u"들어오다", u"들어서다",
+u"드리다",u"들여다보다",u"듣다",u"도착하다",u"되다",u"돌보다",u"돌리다",u"돌다",u"도망가다",u"돕다",u"돌아오다",u"돌아가다",u"돌아보다",
+u"도와주다",u"두다",u"둘어보다",u"둘어싸다",u"없애다",u"얻다",u"어울리다",u"가다",u"개발하다",u"가져가다",u"가져오다",u"갖다",u"감추다",
+u"감사하다",u"감다",u"강조하다",u"갈아입다",u"갈다",u"갈아타다",u"가르치다",u"가리키다",u"갖추다",u"거두다",u"거짓말하다",u"걱정하다",
+u"걸다",u"걸리다",u"건너다",u"걷다",u"걸어가다",u"걸어오다",u"그치다",u"그만두다",u"근무하다",u"그러다",u"그리다",u"기대하다",u"기다리다",
+u"기억하다",u"기억나다",u"기뻐하다",u"기르다",u"기록하다",u"기울이다",u"고치다", u"공부하다",u"고르다",u"그려하다",u"고생하다",u"구경하다",
+u"구하다",u"굽다",u"구성되다",u"관련되다",u"관찰하다",u"관하다",u"겪다", u"결혼하다",u"결정하다",u"결정되다",u"결심하다",u"견디다",
+u"경험하다",u"계산하다",u"계시다",u"계속하다",u"계속되다",u"하다",u"해결하다",u"흘리다",u"흔들다",u"흐르다",u"후회하다",u"확인하다",
+u"화나다",u"활용하다",u"향하다",u"이기다",u"이해하다",u"이혼하다",u"잊어버리다",u"읽다",u"일하다",u"잃다",u"인사하다",u"입다",u"잃어버리다",
+u"일어나다",u"일어서다",u"일으키다",u"이루다",u"이루어지다",u"이사하다",u"잇다",u"있다",u"잊다",u"이야기하다",u"이용하다",u"자다",u"잘하다",
+u"잘되다",u"잘못하다",u"잘못되다",u"잠들다",u"잠자다",u"잡히다",u"잡다",u"자라다",u"자랑하다",u"자르다",u"제공하다",u"적다",u"정하다",
+u"정리하다", u"전하다",u"전화하다",u"젖다",u"즐기다",u"증가하다",u"지치다",u"지다",u"지키다",u"지켜보다",u"질문하다",u"지나다",u"지내다",
+u"지나가다",u"진행되다",u"집다",u"지르다",u"짓다",u"지우다",u"찍다",u"좋아하다",u"졸다",u"졸업하다",u"조사하다",u"조심하다",u"주다",u"죽이다",
+u"주장하다",u"죽다",u"준비하다",u"줄어들다",u"줄다",u"줄이다",u"쥐다",u"커지다",u"크다",u"키우다",u"깨다",u"깨닫다",u"깎다",u"꺼내다",u"끄다",
+u"끄억이다",u"끌다",u"끊다",u"끝나다",u"끝내다",u"끓이다",u"꾸미다",u"꿈꾸다",u"켜다",u"마치다",u"매다",u"막히다",u"막다",u"말다",u"말하다",u"말씀하다",
+u"만들다",u"만지다",u"만족하다",u"만나다",u"마르다",u"마련하다",u"마시다",u"맞치다",u"맡기다",u"맞다1",u"맞다2",u"맞다3",u"맡다",u"먹이다",
+u"먹다",u"멈추다",u"머무르다",u"미치다",u"밀다",u"미루다",u"믿다",u"미워하다",u"모으다",u"모이다",u"모자라다",u"몰다",u"모르다",u"모시다",
+u"못하다",u"묶하다",u"물다",u"무너지다",u"물어보다",u"무시하다",u"묻다",u"나다",u"내다",u"내밀다",u"내놓다",u"내리다",u"내려가다",u"내려오다",
+u"나가다",u"날다",u"남기다",u"남다",u"나누다",u"나오다",u"나빠지다",u"나쁘다",u"날아가다",u"나서다",u"낳다",u"나타나다",u"나타내다",u"넘치다",
+u"넘어가다",u"넘어서다",u"넘기다",u"넘다",u"넣다",u"느끼다",u"늙다",u"늘다",u"늘리다",u"늘어나다",u"늦다",u"놓이다",u"놓다",u"놀다",u"놀라다",u"높이다",
+u"노래하다",u"노력하다",u"놓치다",u"눕다",u"누르다",u"오다",u"외치다",u"올라가다",u"올라오다",u"올리다",u"옮기다",u"오르다",u"팔다",u"피다",
+u"피하다",u"피우다",u"포기하다",u"포함하다",u"포함되다",u"뻬다",u"빠져나가다",u"빠지다",u"뽑다",u"뿌리다",u"풀다",u"풀리다",u"펴다",u"펼쳐지다",
+u"펼치다",u"표현하다",u"사다",u"생각하다",u"생각되다",u"생각나다",u"생기다",u"생겨나다",u"살다",u"살리다",u"살펴보다",u"상상하다",u"사라지다",
+u"사랑하다",u"사용하다",u"사용되다",u"서다",u"서두르다",u"젂다",u"설명하다",u"성공하다",u"선물하다",u"선택하다",u"세우다",u"시달리다",u"시작하다",
+u"시작되다",u"시키다",u"식사하다",u"실례하다",u"실패하다",u"실수하다",u"심다",u"신다",u"싫어하다",u"싣다",u"소개하다",u"속하다",u"소리치다",
+u"싸다",u"쌓이다",u"쌓다",u"싸우다",u"썰다",u"쓰다1",u"쓰다2",u"쓰다3",u"쓰다4",u"쓰이다",u"씹다",u"씻다",u"쏟아지다",u"숨다",u"쉬다",u"타다1",u"타다2",
+u"태어나다",u"태우다1",u"태우다2",u"터지다",u"틀다",u"틀리다",u"통하다",u"따다",u"때리다",u"따라가다",u"따라오다",u"떼다",u"떨다",u"떨리다",u"떠나다",
+u"떠올리다"]          
+
+#------------------------------------------------List of the translation of the Korean verbs in order------------------------------------------
+
+english = [u"try","cherish","know","inform","be_sick","be_unsuccessful", u"be_not", "hug","sit",
+"check","accept","learn","change","be_changed","be_discovered","discover",
+"grow","light","announce","occur","develop","oppose","visit","step_on","stare","wish",
+"be_straight","receive","make_money","spread","get_wide","throw_away","start","get_out",
+"take_off","be_reflected","reflect","be_empty","compare","borrow","lend","see",
+"see","be_seen","stir-fry","send","stick","blow","call","request","pour",u"pass","change","turn_into",
+"kick","take","fill",u"look_for","visit","pick_up","attend","bear","prepare","find","gaze",
+"clean","hit","invite","dance","celebrate","depart","dance","be_drunk","cancel","hurt","be_closed",
+"do_extremely","answer","treat","approach","approach","fulfill","wash","hoist","change","run","run_towards",
+"rise_up","fail",u"open_ones_eyes","mean","run","be_due_to","have_meaning","cry","cause_to_cry",
+"move","exercise","drive","make_laugh","laugh",u"do_for","want","promise","travel",u"open",
+"be_opened","research","practice","demand","cook",u"be_included_in","ressemble","put_into_a_container",
+"pull","undergo","commute",u"return","flee","touch","close","be_more_than","throw","cover","bring_along",
+"bring_along","bring_along","bear","stop_by","be_heard",u"come_in","appear","reveal",
+u"come_in","occupy","offer","look_into","hear","arrive","become",u"care_for","turn_something","turn",
+"escape",u"help",u"return","go_back","come_back",u"help","leave_behind","look_around",
+"surround","kill","obtain","fit","go","exploit","carry","bring","possess","keep_secret","be_thankful",
+"wash","emphasize","change_clothing","change","transfer","teach","indicate",
+"prepare_oneself","gather","lie","worry","hang","take_time","cross","walk","walk_away","walk_towards",
+"stop_something",u"quit","work","say","draw","expect","wait","remember","remember",
+"be_happy",u"raise","record","lean","fix","study","choose","consider","go_through_hardship","sightsee",
+"seek","be_bent","be_configured","be_connected","observe",u"be_in_relation_to","undergo",
+"marry","make_a_decision","be_decided","be_determined_to","endure","experience","calculate","stay",
+u"continue","be_continued","do","resolve","stream","shake","flow","regret","confirm",
+"be_angry","make_use_of","go_towards","win","understand","get_a_divorce","forget","read","work",
+"lose","greet","wear","lose","wake_up","stand_up","rouse","achieve","be_fulfilled",
+"move","follow","be","forget","tell","use","sleep","do_well","do_well","make_a_mistake","go_wrong",
+"go_to_sleep","sleep","be_caught","catch","grow","boast","cut","provide","be_small",
+"specify","organize","convey","make_a_phone_call","become_wet","have_fun","increase","be_tired",
+"bear","protect","look_after","ask",u"pass",u"pass",u"pass","progress","pick_up","insert","build",
+"erase","take_a_picture","like","doze_off","graduate","investigate","be_careful","give","kill","claim",
+"die","be_ready","decrease","reduce","be_reduced","take_hold_of","expand","be_big",u"raise",
+"awaken","apprehend","cut","pull_something_out","extinguish","nod","pull","stop","end","end","boil","decorate","dream",
+"turn_something_on","finish","tie","congested","defend",
+u"not_do","talk","talk","make","handle","satisfy","meet","be_thirsty","prepare","drink","adapt","entrust","hit","correct",
+"meet","take_charge_of","feed","eat","stop","remain","crazy",
+"push","postpone","trust","hate","gather","be_collected","lack","drive",u"not_know","serve",u"not_can","tie","bite",
+"collapse","ask","ignore","ask","go_out","bring_out","push","let_go",
+"be_down","go_down","come_down","go_out","fly","leave_behind","remain","share","come_out","get_worse","be_bad","fly_away",
+"go_forth","give_birth","appear","be_manifested","run_over","cross_over",u"pass_through","carry","surpass","insert","feel",
+"age","increase","expand","expand_numbers","be_late","be_laid","let_go","play","be_surprised",u"raise",
+"sing","make_efforts","let_something_go","lie_down","press","come","cry_out","go_up","come_up","increase","translate",
+"go_up","sell","bloom","evade","smoke","give_up","be_included",
+"include","remove","go_out","fall","extract","scatter","untie","be_untied",u"open","unfold","outstretch","express","buy",
+"think","occur","think","emerge","be_generated","live","bring_back",
+"watch","imagine","vanish","love","use","be_used","stand","hurry","mix","explain","succeed","make_a_gift","choose",u"set_up",
+"be_troubled","begin","start","order","have_a_meal","be_rude",
+"fail","make_a_mistake","plant","wear","hate","load","introduce","be_part_of","shout","be_cheap","become_stacked_up",
+"stack_up","fight","chop","write","use","be_bitter","wear","be_used",
+"chew","wash","be_spilled","hide","rest","ride","burn","be_born","burn_something","give_a_ride",u"break_down","turn",
+"become_wrong",u"pass_through","separate","beat","follow","follow",
+"detach","shiver","tremble","leave","bring_to_mind"]
+
+#---------------------------------------Functions----------------------------------------------------------------
+
+def Initialiser():
+    textbox.delete(1.0, END)
+    textbox2.delete(1.0, END)
+    textbox3.delete(1.0, END)
+def GiveAnswer():
+    textbox2.insert(END,E2.get())
+    print(textbox2.get(1.0, END))
+    textbox3.insert(END,english[x])
+    print(textbox3.get(1.0, END))
+
+def RandomKorean():
+    global x
+    x = randint(0,len(korean)-1)
+    textbox.insert(END,korean[x]) 
+    print(textbox.get(1.0, END))
+    #---
+    AddAll()
+    
+def AddRight():
+    global y
+    y=y+1
+    textbox4.delete(1.0, END)
+    textbox4.insert(END,y)
+    print(textbox4.get(1.0, END))
+
+def AddWrong():
+    global z
+    z=z+1
+    textbox5.delete(1.0, END)
+    textbox5.insert(END,z)
+    print(textbox5.get(1.0, END))
+
+def AddAll():
+    global w
+    w=w+1
+    textbox6.delete(1.0, END)
+    textbox6.insert(END,w)
+    print(textbox6.get(1.0,END))
+    
+
+def CheckAnswer():
+    typedword = E2.get()
+    print(typedword)
+    print(english[x])
+    if typedword!=english[x]:
+         var = messagebox.askyesno("Check","Do you want to consider it right ?")
+         if var == True:
+             AddRight()
+         else:
+             AddWrong()
+    else:
+        AddRight()
+    
+#---------------------------------------Main loop----------------------------------------------------------------
+
+fenetre = Tk()
+
+#--------Text Boxes------------
+textbox = Text(fenetre)
+textbox.pack()
+textbox.place(x=290,y=200,width=140,height=20)
+#-----
+textbox2 = Text(fenetre)
+textbox2.pack()
+textbox2.place(x=170,y=320,width=140,height=20)
+#-----
+textbox3 = Text(fenetre)
+textbox3.pack()
+textbox3.place(x=220,y=360,width=140,height=20)
+#-----
+textbox4 = Text(fenetre)
+textbox4.pack
+textbox4.place(x=135,y=470,width=30,height=20)
+#-----
+textbox5 = Text(fenetre)
+textbox5.pack()
+textbox5.place(x=225,y=470,width=30,height=20)
+#-----
+textbox6 = Text(fenetre)
+textbox6.pack()
+textbox6.place(x=665,y=470,width=35,height=20)
+#-------------------------------Buttons-----------------------------------
+T = Text(fenetre, height=10, width=150,bg='lightcyan')
+T.pack()
+T.insert(END, "  Welcome on the Korean-English Dictionnary !\n  Here are the rules:\n  The computer will pick randomly one of the Korean words, and you will have to type the translation in english.\n  If the answer is in two parts, each space will be considered as a _\n  No need to type the (to) at the beginning of the word.\n  After typing your answer, the computer will give you the correct answer and will ask you if you want to consider your answer as the correct one.\n  A counter for the ones you knew and the ones you didn't will be present, as well as the counter of the total number of words you translated.\n  Let's go !")
+
+
+label = Label(fenetre)
+label.pack()
+
+submit = Button(fenetre, text ="Submit",command = GiveAnswer)
+submit.pack()
+submit.place(x=660,y=230)
+
+check = Button(fenetre, text="Check",command=CheckAnswer)
+check.pack()
+check.place(x=390,y=360)
+
+fenetre.geometry('1000x500')
+fenetre.configure(bg='lightcyan')
+
+getaword = Button(fenetre, text="Get a word", command = RandomKorean)
+getaword.pack()
+getaword.place(x=320,y=230)
+
+reset = Button(fenetre, text="Next", command = Initialiser)
+reset.pack(side=BOTTOM)
+#---------------------------------------------------------------------------------------------------------------
+
+x = 0
+y = 0
+w = 0
+z = 0
+
+#--------------Labels,Entries and Texts------------------------------------------------------------------------
+
+label1 = Label(fenetre, text="What is the translation in English of :",bg='lightcyan')
+label1.pack()
+label1.place(x=80, y=200)
+#-----
+label2 = Label(fenetre, text="Type in your translation :  to ",bg='lightcyan')
+E2 = Entry(fenetre, bd =5)
+label2.pack()
+E2.pack()
+label2.place(x=460,y=200)
+E2.place(x=620,y=200)
+#-----
+label3 = Label(fenetre, text="You typed :   to",bg='lightcyan')
+label3.pack()
+label3.place(x=80,y=320)
+#-----
+label4 = Label(fenetre, text="The right answer is :   to",bg='lightcyan')
+label4.pack()
+label4.place(x=80,y=360)
+#-----
+label5 = Label(fenetre,text="Correct :", bg='lightcyan')
+label5.pack
+label5.place(x=80,y=470)
+#-----
+label6 = Label(fenetre, text="Wrong :",bg='lightcyan')
+label6.pack()
+label6.place(x=170,y=470)
+#-----
+label7 = Label(fenetre, text="Total :",bg='lightcyan')
+label7.pack()
+label7.place(x=620,y=470)
+
+#--------------------------------------------------------------------------------------------------------------------
+
+separator = Frame(height=2, bd=1, relief=SUNKEN)
+separator.pack(fill=X, padx=1, pady=100)
+
+
+btnQuitter = Button(fenetre,text="Quitter",command=fenetre.destroy)
+btnQuitter.pack(side=RIGHT)
+btnQuitter.place(x=950,y=465)
+
+
+
+
+fenetre.mainloop()
+
