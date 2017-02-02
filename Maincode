@@ -3,7 +3,6 @@ import math
 from tkinter import *
 import tkinter as tk
 from tkinter import messagebox
-
 #-----------------------------------List of 491 Korean verbs ------------------------------------------------------------------------
 
 korean = [u"애쓰다", u"아끼다", u"알다", u"알리다", u"앓다", u"안되다", u"않다", u"안다", u"앉다",
@@ -44,7 +43,6 @@ u"시작되다",u"시키다",u"식사하다",u"실례하다",u"실패하다",u"�
 u"싸다",u"쌓이다",u"쌓다",u"싸우다",u"썰다",u"쓰다1",u"쓰다2",u"쓰다3",u"쓰다4",u"쓰이다",u"씹다",u"씻다",u"쏟아지다",u"숨다",u"쉬다",u"타다1",u"타다2",
 u"태어나다",u"태우다1",u"태우다2",u"터지다",u"틀다",u"틀리다",u"통하다",u"따다",u"때리다",u"따라가다",u"따라오다",u"떼다",u"떨다",u"떨리다",u"떠나다",
 u"떠올리다"]          
-
 #------------------------------------------------List of the translation of the Korean verbs in order------------------------------------------
 
 english = [u"try","cherish","know","inform","be_sick","be_unsuccessful", u"be_not", "hug","sit",
@@ -102,11 +100,11 @@ u"not_do","talk","talk","make","handle","satisfy","meet","be_thirsty","prepare",
 
 #---------------------------------------Functions----------------------------------------------------------------
 
-def Initialiser():
+def Initialiser(event):
     textbox.delete(1.0, END)
     textbox2.delete(1.0, END)
     textbox3.delete(1.0, END)
-def GiveAnswer():
+def GiveAnswer(event):
     textbox2.insert(END,E2.get())
     print(textbox2.get(1.0, END))
     textbox3.insert(END,english[x])
@@ -154,7 +152,15 @@ def CheckAnswer():
              AddWrong()
     else:
         AddRight()
-    
+
+def Other ():
+    global w
+    Initialiser()
+    w=w-1
+    textbox6.delete(1.0, END)
+    textbox6.insert(END,w)
+    print(textbox6.get(1.0,END))
+
 #---------------------------------------Main loop----------------------------------------------------------------
 
 fenetre = Tk()
@@ -192,23 +198,30 @@ T.insert(END, "  Welcome on the Korean-English Dictionnary !\n  Here are the rul
 label = Label(fenetre)
 label.pack()
 
-submit = Button(fenetre, text ="Submit",command = GiveAnswer)
+submit = Button(fenetre, text ="Submit",command = GiveAnswer,relief=GROOVE)
 submit.pack()
 submit.place(x=660,y=230)
 
-check = Button(fenetre, text="Check",command=CheckAnswer)
+check = Button(fenetre, text="Check",command=CheckAnswer,relief=GROOVE)
 check.pack()
 check.place(x=390,y=360)
 
 fenetre.geometry('1000x500')
 fenetre.configure(bg='lightcyan')
 
-getaword = Button(fenetre, text="Get a word", command = RandomKorean)
+getaword = Button(fenetre, text="Get a word", command = RandomKorean, relief=GROOVE)
 getaword.pack()
-getaword.place(x=320,y=230)
+getaword.place(x=347,y=230)
 
-reset = Button(fenetre, text="Next", command = Initialiser)
+reset = Button(fenetre, text="Clear", command = Initialiser,relief=GROOVE)
 reset.pack(side=BOTTOM)
+
+other = Button(fenetre, text="Other", command = Other,relief=GROOVE)
+other.pack()
+other.place(x=305,y=230)
+
+fenetre.bind("<Return>",GiveAnswer)
+fenetre.bind("<BackSpace>",Initialiser)
 #---------------------------------------------------------------------------------------------------------------
 
 x = 0
@@ -251,16 +264,16 @@ label7.place(x=620,y=470)
 
 #--------------------------------------------------------------------------------------------------------------------
 
+
 separator = Frame(height=2, bd=1, relief=SUNKEN)
 separator.pack(fill=X, padx=1, pady=100)
 
 
 btnQuitter = Button(fenetre,text="Quitter",command=fenetre.destroy)
 btnQuitter.pack(side=RIGHT)
-btnQuitter.place(x=950,y=465)
+btnQuitter.place(x=950,y=470)
 
 
 
 
 fenetre.mainloop()
-
