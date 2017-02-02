@@ -100,11 +100,12 @@ u"not_do","talk","talk","make","handle","satisfy","meet","be_thirsty","prepare",
 
 #---------------------------------------Functions----------------------------------------------------------------
 
-def Initialiser(event):
+def Initialiser(event=0):
     textbox.delete(1.0, END)
     textbox2.delete(1.0, END)
     textbox3.delete(1.0, END)
-def GiveAnswer(event):
+    
+def GiveAnswer(event=0):
     textbox2.insert(END,E2.get())
     print(textbox2.get(1.0, END))
     textbox3.insert(END,english[x])
@@ -222,14 +223,14 @@ fenetre.configure(bg='lavender')
 
 getaword = Button(fenetre, text="Get a word", command = RandomKorean, relief=GROOVE)
 getaword.pack()
-getaword.place(x=327,y=230)
+getaword.place(x=304,y=230)
 
 reset = Button(fenetre, text="Clear", command = Initialiser,relief=GROOVE)
 reset.pack(side=BOTTOM)
 
-other = Button(fenetre, text="Other", command = Other,relief=GROOVE)
+other = Button(fenetre, text="Already translated ? Get another one", command = Other,relief=GROOVE)
 other.pack()
-other.place(x=285,y=230)
+other.place(x=240,y=258,width=200)
 
 fenetre.bind("<Return>",GiveAnswer)
 fenetre.bind("<BackSpace>",Initialiser)
@@ -291,7 +292,7 @@ separator = Frame(height=2, bd=1, relief=SUNKEN)
 separator.pack(fill=X, padx=1, pady=100)
 
 
-btnQuitter = Button(fenetre,text="Quitter",command=fenetre.destroy)
+btnQuitter = Button(fenetre,text="Quit",command=fenetre.destroy)
 btnQuitter.pack(side=RIGHT)
 btnQuitter.place(x=780,y=470)
 
