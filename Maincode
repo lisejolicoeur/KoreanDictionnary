@@ -63,7 +63,7 @@ u"come_in","occupy","offer","look_into","hear","arrive","become",u"care_for","tu
 "escape",u"help",u"return","go_back","come_back",u"help","leave_behind","look_around",
 "surround","kill","obtain","fit","go","exploit","carry","bring","possess","keep_secret","be_thankful",
 "wash","emphasize","change_clothing","change","transfer","teach","indicate",
-"prepare_oneself","gather","lie","worry","hang","take_time","cross","walk","walk_away","walk_towards",
+"prepare_oneself","gather","lie","worry","hang","cross","walk","walk_away","walk_towards",
 "stop_something",u"quit","work","say","draw","expect","wait","remember","remember",
 "be_happy",u"raise","record","lean","fix","study","choose","consider","go_through_hardship","sightsee",
 "seek","be_bent","be_configured","be_connected","observe",u"be_in_relation_to","undergo",
@@ -107,12 +107,11 @@ def Initialiser(event=0):
     
 def GiveAnswer(event=0):
     textbox2.insert(END,E2.get())
-    print(textbox2.get(1.0, END))
     textbox3.insert(END,english[x])
-    print(textbox3.get(1.0, END))
 
 def RandomKorean():
     global x
+    Initialiser()
     x = randint(0,len(korean)-1)
     textbox.insert(END,korean[x]) 
     print(textbox.get(1.0, END))
@@ -124,27 +123,22 @@ def AddRight():
     y=y+1
     textbox4.delete(1.0, END)
     textbox4.insert(END,y)
-    print(textbox4.get(1.0, END))
 
 def AddWrong():
     global z
     z=z+1
     textbox5.delete(1.0, END)
     textbox5.insert(END,z)
-    print(textbox5.get(1.0, END))
 
 def AddAll():
     global w
     w=w+1
     textbox6.delete(1.0, END)
     textbox6.insert(END,w)
-    print(textbox6.get(1.0,END))
     
 
 def CheckAnswer():
     typedword = E2.get()
-    print(typedword)
-    print(english[x])
     if typedword!=english[x]:
          var = messagebox.askyesno("Check","Do you want to consider it right ?")
          if var == True:
@@ -160,7 +154,6 @@ def Other ():
     w=w-1
     textbox6.delete(1.0, END)
     textbox6.insert(END,w)
-    print(textbox6.get(1.0,END))
     
 def on_entry_click(event):
     if E2.get() == 'Enter Eng text here...':
@@ -173,6 +166,15 @@ def on_focusout(event):
         E2.insert(0, 'Enter Eng text here...')
         E2.config(fg = 'grey')
        
+def Idontknow():
+	global v
+	v = v +1
+	Initialiser()
+	textbox7.delete(1.0,END)
+	textbox7.insert(END,v)
+	GiveAnswer()
+
+
 #---------------------------------------Main loop----------------------------------------------------------------
 
 fenetre = Tk()
@@ -200,7 +202,11 @@ textbox5.place(x=205,y=470,width=30,height=20)
 #-----
 textbox6 = Text(fenetre)
 textbox6.pack()
-textbox6.place(x=645,y=470,width=35,height=20)
+textbox6.place(x=655,y=470,width=35,height=20)
+
+textbox7 = Text(fenetre)
+textbox7.pack()
+textbox7.place(x=565,y=470,width=35,height=20)
 #-------------------------------Buttons-----------------------------------
 T = Text(fenetre, height=10, width=150,bg='lavender',relief=SUNKEN)
 T.pack()
@@ -234,10 +240,15 @@ other.place(x=240,y=258,width=200)
 
 fenetre.bind("<Return>",GiveAnswer)
 fenetre.bind("<BackSpace>",Initialiser)
+
+idontknow = Button(fenetre, text="I don't know", command = Idontknow, relief=GROOVE)
+idontknow.pack()
+idontknow.place(x=555,y=258, width=80)
 #---------------------------------------------------------------------------------------------------------------
 
 x = 0
 y = 0
+v = 0
 w = 0
 z = 0
 
@@ -282,8 +293,13 @@ label6.configure(font=("helvetica",9))
 #-----
 label7 = Label(fenetre, text="Total :",bg='lavender')
 label7.pack()
-label7.place(x=600,y=470)
+label7.place(x=610,y=470)
 label7.configure(font=("helvetica",9))
+
+label8 = Label(fenetre, text="Didn't know :",bg='lavender')
+label8.pack()
+label8.place(x=490,y=470)
+label8.configure(font=("helvetica",9))
 
 #--------------------------------------------------------------------------------------------------------------------
 
@@ -298,5 +314,9 @@ btnQuitter.place(x=780,y=470)
 
 fenetre.title("Korean Dictionary")
 
+#for loop in range(len(english)):
+#      print (korean[loop])
+#      print(english[loop])
 
 fenetre.mainloop()
+
